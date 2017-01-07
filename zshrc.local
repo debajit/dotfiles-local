@@ -1,0 +1,6 @@
+## RBenv
+eval "$(rbenv init -)"
+
+## Elixir
+# Add Mix escripts to PATH
+export PATH="$PATH:$HOME/.mix/escripts"
