@@ -1,16 +1,17 @@
-require 'rake/clean'
+require 'rake/clean' # See http://devblog.avdi.org/2014/04/28/rake-part-6-clean-and-clobber/
 
-SOURCE_FILES_TO_INSTALL = [
-  "zshrc.local"
-]
+# Dotfile => Target file (where this will be installed)
+DOTFILE_TARGET = {
+  "zshrc.local" => "#{Dir.home}/.zshrc.local",
+}
 
+# Generate Rake tasks
 targets = []
-
-SOURCE_FILES_TO_INSTALL.each do |source|
-  target = File.join(Dir.home, ".#{source}")
-
-  desc "Install #{target}"
-  file target => source do
+DOTFILE_TARGET.each do |source, target|
+  desc "Install #{source} => #{target}"
+  file target => source do |task|
+    target_dir = File.dirname(target)
+    mkdir_p(target_dir) unless File.exists?(target_dir)
     cp source, target
   end
 
